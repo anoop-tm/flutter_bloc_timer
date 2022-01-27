@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors, unused_import
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_bloc_timer/modules/timer/bloc/timer_bloc.dart';
@@ -14,18 +12,52 @@ class TimerView extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
+          children: const [
             _TimerText(),
-            ElevatedButton(
-              onPressed: () {
-                context.read<TimerBloc>().add(TimerStarted());
-              },
-              style: ElevatedButton.styleFrom(primary: Colors.green),
-              child: Text('Start'),
-            ),
+            SizedBox(height: 35),
+            _Buttons(),
           ],
         ),
       ),
+    );
+  }
+}
+
+class _Buttons extends StatelessWidget {
+  const _Buttons({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<TimerBloc, TimerState>(
+      builder: (context, state) {
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            if (state is TimerInitial) ...[
+              ElevatedButton.icon(
+                onPressed: () {
+                  context.read<TimerBloc>().add(const TimerStarted());
+                },
+                icon: const Icon(Icons.play_arrow),
+                label: const Text('Start'),
+                style: ElevatedButton.styleFrom(primary: Colors.green),
+              ),
+            ],
+            if (state is TimerRunning) ...[
+              ElevatedButton.icon(
+                onPressed: () {
+                  context.read<TimerBloc>().add(const TimerStopped());
+                },
+                icon: const Icon(Icons.stop),
+                label: const Text('Stop'),
+                style: ElevatedButton.styleFrom(primary: Colors.red.shade400),
+              ),
+            ]
+          ],
+        );
+      },
     );
   }
 }
