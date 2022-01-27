@@ -16,3 +16,10 @@ class TimerInitial extends TimerState {
 class TimerRunning extends TimerState {
   const TimerRunning(Duration duration) : super(duration);
 }
+
+class TimerPause extends TimerState {
+  const TimerPause(Duration duration) : super(duration);
+
+  @override
+  List<Object> get props => [duration];
+}

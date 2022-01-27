@@ -52,9 +52,27 @@ class _Buttons extends StatelessWidget {
                 },
                 icon: const Icon(Icons.stop),
                 label: const Text('Stop'),
-                style: ElevatedButton.styleFrom(primary: Colors.red.shade400),
+                style: ElevatedButton.styleFrom(primary: Colors.red),
               ),
-            ]
+              ElevatedButton.icon(
+                onPressed: () {
+                  context.read<TimerBloc>().add(TimerPaused(state.duration));
+                },
+                icon: const Icon(Icons.pause),
+                label: const Text('Pause'),
+                style: ElevatedButton.styleFrom(primary: Colors.pink),
+              ),
+            ],
+            if (state is TimerPause) ...[
+              ElevatedButton.icon(
+                onPressed: () {
+                  context.read<TimerBloc>().add(TimerResumed(state.duration));
+                },
+                icon: const Icon(Icons.play_arrow),
+                label: const Text('Resume'),
+                style: ElevatedButton.styleFrom(primary: Colors.green),
+              ),
+            ],
           ],
         );
       },

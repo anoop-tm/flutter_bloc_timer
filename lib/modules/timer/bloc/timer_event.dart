@@ -22,3 +22,13 @@ class TimerTicked extends TimerEvent {
 class TimerStopped extends TimerEvent {
   const TimerStopped();
 }
+
+class TimerPaused extends TimerEvent {
+  final Duration duration;
+  const TimerPaused(this.duration);
+}
+
+class TimerResumed extends TimerEvent {
+  final Duration duration;
+  const TimerResumed(this.duration);
+}

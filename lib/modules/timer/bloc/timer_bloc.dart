@@ -28,5 +28,15 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
       _subscription?.cancel();
       emit(const TimerInitial(Duration()));
     });
+
+    on<TimerPaused>((event, emit) {
+      _subscription?.pause();
+      emit(TimerPause(event.duration));
+    });
+
+    on<TimerResumed>((event, emit) {
+      _subscription?.resume();
+      emit(TimerRunning(event.duration));
+    });
   }
 }
