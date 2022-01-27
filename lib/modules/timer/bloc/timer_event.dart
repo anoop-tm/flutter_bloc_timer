@@ -18,3 +18,7 @@ class TimerTicked extends TimerEvent {
   @override
   List<Object> get props => [duration];
 }
+
+class TimerStopped extends TimerEvent {
+  const TimerStopped();
+}
